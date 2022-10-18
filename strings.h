@@ -16,6 +16,7 @@ typedef struct string {
 string *new_plain(char *, int roundup);
 string *new_cipher(char *, int len, int roundup);
 string *encrypt_string(cipher c, char *s, char *key);
+char *decrypt_string(cipher c, string *str, char *key);
 void setiv_string(char *newiv);
 void print_C_string(char *s);
 
