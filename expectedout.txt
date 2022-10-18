@@ -1,0 +1,14 @@
+Triplet: 1, Cipher: Caesar, Encrypt len: 5
+68 76 74 75 7a _0 _0 _0 _0 _0 _0 _0 _0 _0 _0 _0   |  hvtuz
+Triplet: 2, Cipher: Caesar, Decrypt len: 5
+67 75 73 74 79 _0 _0 _0 _0 _0 _0 _0 _0 _0 _0 _0   |  gusty
+Triplet: 3, Cipher: Augustus, Encrypt len: 5
+74 69 66 68 6c _0 _0 _0 _0 _0 _0 _0 _0 _0 _0 _0   |  tifhl
+Triplet: 4, Cipher: Augustus, Decrypt len: 5
+67 75 73 74 79 _0 _0 _0 _0 _0 _0 _0 _0 _0 _0 _0   |  gusty
+Triplet: 5, Cipher: Augustus, Decrypt len: 6
+48 65 6c 6c 6f 21 _0 _0 _0 _0 _0 _0 _0 _0 _0 _0   |  Hello!
+Triplet: 6, Cipher: AES, Encrypt len: 16
+46 59 65 9d ca 2b 85 d9 d4 64 ef e6 c7 ce 87 d0   |  FYe  +   d
+Triplet: 7, Cipher: AES, Decrypt len: 16
+67 75 73 74 79 00 00 00 00 00 00 00 00 00 00 00   |  gusty
