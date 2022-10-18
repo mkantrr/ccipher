@@ -1,0 +1,6 @@
+Division of labor for project
+
+Caesar Cipher: Ben
+Augustus Cipher: Jayden
+AES Cipher: Matt
+TBD: Adam
