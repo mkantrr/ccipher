@@ -7,24 +7,15 @@ char *caesar_encrypt(char *plain, char *key){
     char newplain[len];
     int  newkey = keyint/26;
     newkey = keyint - (26*newkey);
-    
     for(int i=0;i<len;i++){
         char el = plain[i];
-        printf("%d\n", newkey);
-        printf("%d\n", el);
-        char newel = el+newkey;
-        printf("%d\n", newel);
-        if(newel > 122){
-            // printf("XX");
-            // printf("%d\n", newel);
-            newel = newel - 122;
-            // printf("%d\n", newel);
-            newel = newel + 96;
-            // printf("%d\n", newel);
+        int newelint = el+newkey;
+        if(newelint > 122){
+            newelint = newelint - 122;
+            newelint = newelint + 96;
         }
-        // printf("%d\n", newel);
+        char newel = newelint;
         newplain[i] = newel;
-        printf("\n");
     } 
     plain = newplain;
     return plain;
@@ -37,7 +28,12 @@ char *caesar_decrypt(char *cipher, char *key){
     newkey = keyint - (26*newkey);
     for(int i=0;i<len;i++){
         char el = cipher[i];
-        char newel = el-newkey;
+        int newelint = el-newkey;
+        if(newelint < 97){
+            newelint = newelint - 96;
+            newelint = newelint + 122;
+        }
+        char newel = newelint;
         newcipher[i] = newel;
     }
     cipher = newcipher;
