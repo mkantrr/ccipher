@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "caesar.h"
+#include "strings.h"
 void default_tests() {
     printf("ceasarEncrypt(gusty, 1): %s\n", caesar_encrypt("gusty", "1"));
     printf("ceasarEncrypt(gusty, 27): %s\n", caesar_encrypt("gusty", "27"));
@@ -23,12 +24,12 @@ void default_tests() {
     // printf("augustusDecript(augustusEncrypt(gusty, 11), 11): %s\n", augustus_decrypt(augustus_encrypt("gusty", "11"), "11"));
     // printf("XXaugustusDecript(augustusEncrypt(gusty, 11), 11): %s\n", decrypt_string(AUGUSTUS, encrypt_string(AUGUSTUS, "gusty", "11"), "11"));
 
-    // string *str = encrypt_string(CAESAR, "gusty !15:","2");
-    // printf("%s\n", str->plain);
-    // printf("%s\n", str->cipher);
-    // printf("str->print\n");
-    // str->print(str, PLAIN);
-    // str->print(str, CIPHER);
+    string *str = encrypt_string(CAESAR, "gusty !15:","2");
+    printf("%s\n", str->plain);
+    printf("%s\n", str->cipher);
+    printf("str->print\n");
+    str->print(str, PLAIN);
+    str->print(str, CIPHER);
     // char *plain = decrypt_string(CAESAR, str, "2");
     // printf("%s\n", plain);
 
