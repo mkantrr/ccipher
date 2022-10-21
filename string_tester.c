@@ -57,7 +57,7 @@ int main(int argc, char **argv){
                     printf("\n");
                 }
             }
-            if(strcmp(cip, "au") == 0){
+            if(strcmp(cip, "au") == 0){ //Add Augustus cipher user interface here
                 printf("Enter key (Enter d for default): ");
                 fgets(key, 100, stdin);
                 printf("%s\n", key);
@@ -67,6 +67,9 @@ int main(int argc, char **argv){
                     
                 }
             }
+            if(strcmp(cip, "ae") == 0){
+                // Add aes cipher user interface here
+            }
         }
         }else{
             if(strcmp(argv[1], "default") == 0){
@@ -74,6 +77,7 @@ int main(int argc, char **argv){
             }
             if (strstr(argv[1], ".txt") != NULL){
                 printf("BBB\n");
+                // add txt reader code HERE
             }
         }
     return 0;

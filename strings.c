@@ -69,6 +69,7 @@ string *encrypt_string(cipher c, char *s, char *key){
     if(c == CAESAR){
         newstr = caesar_encrypt(s, key);
     }
+    // if statements regarding which cipher is being used
     str->cipher = newstr;
     str->len = slen;
     str->print = print1;
@@ -83,6 +84,7 @@ char *decrypt_string(cipher c, string *str, char *key){
         char *newchar2 = malloc(sizeof(str->cipher));
         newchar = caesar_decrypt(newchar, key);
     }
+    //if statements again regarding which cipher
     str->plain = newchar;
     return newchar;
 }
