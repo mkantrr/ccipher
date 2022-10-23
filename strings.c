@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "strings.h"
 #include "caesar.h"
+#include "augustus.h"
 #include "aes_cbc.h"
 void print1(string *self, string_type st){
     if(st == PLAIN){
@@ -95,6 +96,7 @@ string *encrypt_string(cipher c, char *s, char *key){
       newstr = s;
       str -> len = buf_length;
       } else if (c == AUGUSTUS) {
+        newstr = augustus_encrypt(s, key);
       } else {}
     // if statements regarding which cipher is being used
     str->cipher = newstr;
@@ -130,6 +132,7 @@ char *decrypt_string(cipher c, string *str, char *key){
       newstr;
       str -> len = buf_length;
       } else if (c == AUGUSTUS) {
+        newstr = augustus_decrypt(newstr, key);
       } else {}
 
     //if statements again regarding which cipher
