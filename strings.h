@@ -4,12 +4,12 @@ typedef enum cipher { CAESAR, AUGUSTUS, AES } cipher;
 typedef enum string_type { PLAIN, CIPHER } string_type;
 typedef struct string string;
 typedef struct string {
-char *plain;
-char *cipher;
-int len;
-void    (*print)(string *, string_type);
-string* (*encrypt)(cipher c, char *s, char *key);
-char *  (*decrypt)(cipher c, string *s, char *key);
+  char *plain;
+  char *cipher;
+  int len;
+  void    (*print)(string *, string_type);
+  string* (*encrypt)(enum cipher c, char *s, char *key);
+  char *  (*decrypt)(enum cipher c, string *s, char *key);
 } string;
 string *new_plain(char *plain, int roundup);
 string *new_cipher(char *ciph, int len, int roundup);
