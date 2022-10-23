@@ -58,12 +58,35 @@ int main(int argc, char **argv){
                 }
             }
             if(strcmp(cip, "au") == 0){ //Add Augustus cipher user interface here
+                printf("Enter string: ");
+                fgets(stringx, 100, stdin);
+                printf("\n");
                 printf("Enter key (Enter d for default): ");
                 fgets(key, 100, stdin);
                 printf("%s\n", key);
-                if(key == "D"){
+                if(key == "d"){
+                    printf("\n");
+                    printf("Plain text string: \n");
+                    string *str = encrypt_string(AUGUSTUS, stringx, defaugustus);
+                    printf("len: %d\n", str->len);
+                    printf("%s\n", str->plain);
+                    printf("\n");
+                    printf("Cipher text string:\n");
+                    printf("len: %d\n", str->len);
+                    printf("%s\n", str->cipher);
+                    printf("\n");
                     
                 }else{
+                    printf("\n");
+                    printf("Plain text string: \n");
+                    string *str = encrypt_string(AUGUSTUS, stringx, key);
+                    printf("len: %d\n", str->len);
+                    printf("%s\n", str->plain);
+                    printf("\n");
+                    printf("Cipher text string:\n");
+                    printf("len: %d\n", str->len);
+                    printf("%s\n", str->cipher);
+                    printf("\n");
                     
                 }
             }
