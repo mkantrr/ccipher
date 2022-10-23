@@ -5,6 +5,7 @@
 #include "default_tests.h"
 #include "caesar.h"
 #include "strings.h"
+#include "aes_cbc.h"
 int main(int argc, char **argv){
     if(argc == 1){
         char *defcaesar = "1";
@@ -34,6 +35,7 @@ int main(int argc, char **argv){
                 printf("Enter key (Enter d for default): ");
                 fgets(key, 100, stdin);
                 if(key[0] == 'd'){
+                    printf("Using default key.");
                     printf("\n");
                     printf("Plain text string:\n");
                     string *str = encrypt_string(CAESAR, stringx, defcaesar);
@@ -68,8 +70,33 @@ int main(int argc, char **argv){
                 }
             }
             if(strcmp(cip, "ae") == 0){
-                // Add aes cipher user interface here
-            }
+              printf("Enter key (Enter d for default): ");
+              printf("AES Key must be 16 bytes.");
+              fgets(key, 100, stdin);
+              if (key[0] == 'd') {
+                printf("Using default key.");
+                printf("\n");
+                printf("Plain text string:\n");
+                string *str = encrypt_string(AES, stringx, defaes);
+                printf("len: %d", str -> len);
+                for (int i = 0; i < str -> len; i++) {
+                // Add printer function
+                }
+              }
+              else {
+                struct AES_ctx ctx;
+
+                strcpy(key, 
+
+                int key_len = (strlen(key)/3) + 1;
+                char *key_arr[key_len + 1];
+
+                string *str = encrypt_string(AES, stringx, key);
+                if (str -> len % 16 != 0) {
+                  printf("AES Key not 16 bytes. Using default key.");
+                } else {
+                  // add printer function
+                }
         }
         }else{
             if(strcmp(argv[1], "default") == 0){

@@ -77,43 +77,23 @@ string *encrypt_string(cipher c, char *s, char *key){
     else if(c == AES) {
       struct AES_ctx ctx;
 
-      int key_len = (slen/3) + 1;
-      uint8_t key_arr[key_len + 1];
-
-      char hexNum[3];
-      hexNum[2] = 0;
-
-      for (int i = 0; i < key_len; i++) {
-        key = strchr(key, ' ');
-        if (key) {
-          hexNum[0] = *(key-2);
-          hexNum[1] = *(key-1);
-          key_arr[i] = (char)strtoul(hexNum, NULL, 16);
-
-          key++;
-
-          if (strlen(key) == 2) {
-            i++;
-
-            hexNum[0] = *(key);
-            hexNum[1] = *(key+1);
-            key_arr[i] = (char)strtoul(hexNum, NULL, 16);
-          }
-        }
-      }
-
       uint8_t iv[] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
                     0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
         
-      AES_init_ctx_iv(&ctx, key_arr, iv);
+      AES_init_ctx_iv(&ctx, key, iv);
       uint32_t buf_length;
-      if (key_len < 16 || key_len == 16) {
-        buf_length = 16;
+      if (strlen(s) < 16 || strlen(s) == 16) {
+        buf_length = strlen(s);
       } else {
-        buf_length = (16 * (key_len / 16)) + (key_len % 16);
+        buf_length = (strlen(s) * ((strlen(s) / 16) + 1)) - ((strlen(s) % 10) - 1);
       }
-      AES_CBC_encrypt_buffer(&ctx, key_arr, buf_length);
-      newstr = &key_arr;
+      if (buf_length % 16 == 0) {
+      AES_CBC_encrypt_buffer(&ctx, s, buf_length);
+      } else {
+        newstr = NULL;
+      }
+      newstr = s;
+      str -> len = buf_length;
       } else if (c == AUGUSTUS) {
       } else {}
     // if statements regarding which cipher is being used
@@ -132,43 +112,23 @@ char *decrypt_string(cipher c, string *str, char *key){
     } else if(c == AES) {
       struct AES_ctx ctx;
 
-      int key_len = (slen/3) + 1;
-      uint8_t key_arr[key_len + 1];
-
-      char hexNum[3];
-      hexNum[2] = 0;
-
-      for (int i = 0; i < key_len; i++) {
-        key = strchr(key, ' ');
-        if (key) {
-          hexNum[0] = *(key-2);
-          hexNum[1] = *(key-1);
-          key_arr[i] = (char)strtoul(hexNum, NULL, 16);
-
-          key++;
-
-          if (strlen(key) == 2) {
-            i++;
-
-            hexNum[0] = *(key);
-            hexNum[1] = *(key+1);
-            key_arr[i] = (char)strtoul(hexNum, NULL, 16);
-          }
-        }
-      }
-
       uint8_t iv[] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
                     0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
         
-      AES_init_ctx_iv(&ctx, key_arr, iv);
+      AES_init_ctx_iv(&ctx, key, iv);
       uint32_t buf_length;
-      if (key_len < 16 || key_len == 16) {
-        buf_length = 16;
+      if (strlen(newstr) < 16 || strlen(newstr) == 16) {
+        buf_length = strlen(newstr);
       } else {
-        buf_length = (16 * (key_len / 16)) + (key_len % 16);
+        buf_length = (strlen(newstr) * ((strlen(newstr) / 16) + 1)) - ((strlen(newstr) % 10) - 1);
       }
-      AES_CBC_decrypt_buffer(&ctx, key_arr, buf_length);
-      newstr = &key_arr;
+      if (buf_length % 16 == 0) {
+      AES_CBC_decrypt_buffer(&ctx, newstr, buf_length);
+      } else {
+        newstr = NULL;
+      }
+      newstr;
+      str -> len = buf_length;
       } else if (c == AUGUSTUS) {
       } else {}
 
