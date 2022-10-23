@@ -172,7 +172,7 @@ char *decrypt_string(cipher c, string *str, char *key){
       AES_CBC_decrypt_buffer(&ctx, key_arr, buf_length);
       newstr = &key_arr;
       } else if (c == AUGUSTUS) {
-        newstr = augustus_decrypt(s,k);
+        newstr = augustus_decrypt(newstr, key);
       } else {}
 
     //if statements again regarding which cipher
