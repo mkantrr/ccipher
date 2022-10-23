@@ -2,15 +2,31 @@
 #include <string.h>
 #include <stdlib.h>
 
+/*
+Method used in decryption
+Takes the current position of the letter for decryption and increments it
+backwards. If incrementing will cause a wrap around, resets back at 26 value, or 'z'
+*/
+
 int wrapAround(int start, int key) {
     int wrap;
-    if ((start-key) < 0) {
-        wrap = 26 - abs(start-key);
+    int diff = start-key;
+    if (diff < 0) {
+        while (diff < 0) {
+            diff = abs(diff-key);
+        }
+        wrap = 26 - diff;
     } else {
         wrap = start-key;
     }
     return wrap;
 }
+
+/*
+Method takes a char and converts it into its appropriate caesaer encrypted char.
+Uses decimal value from ASCII table, values may need changing if 
+table is ever altered.
+*/
 
 char caesarConvert(char input, int key) {
     int newPos;
@@ -35,6 +51,12 @@ char caesarConvert(char input, int key) {
     return newPos;
     
 }
+
+/*
+Method takes a char input and reverts it from its encrypted form back to the original
+message. Calls wrapAround method to handle any case where the letter may need to start over
+from 'z'. Based off of ASCII values, again may need altered if values change.
+*/
 
 char caesarRevert(char input, int key) {
     int newPos;
@@ -61,7 +83,12 @@ char caesarRevert(char input, int key) {
     return newPos;
 }
 
+/*
+Method takes char array input, for both the unencrypted message, as well as key
 
+Conversion broken down into 2 steps, once for initial conversion, again for the unique 
+augustus conversion
+*/
 
 char *augustus_encrypt(char *plain, char *key) {
     int plainLen = strlen(plain);
@@ -88,6 +115,7 @@ char *augustus_encrypt(char *plain, char *key) {
     for (int i = 0; i<plainLen; i++) {
         char currentChar = encrypted[i];
         char newChar;
+        //Used to determine place in key string, 48 comes from ASCII table
         char temp;
         temp = key[i%keyLen];
         int val = temp - 48;
@@ -100,6 +128,12 @@ char *augustus_encrypt(char *plain, char *key) {
     
 }
 
+/*
+Method takes char array input, for both encrypted message and key
+
+Reversion broken into 2 steps as well, first reversion for augustus, second for caesar conversion
+*/
+
 char *augustus_decrypt(char *cipher, char *key) {
     int cipherLen = strlen(cipher);
     int keyLen = strlen(key);
@@ -110,6 +144,7 @@ char *augustus_decrypt(char *cipher, char *key) {
         char currentChar = cipher[i];
         char newChar;
         
+        //Same as for augustus_encrypt, used to determine which place you are at in key string
         char temp;
         temp = key[i%keyLen];
         int val = temp - 48;
