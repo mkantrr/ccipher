@@ -35,9 +35,9 @@ char *caesar_encrypt(char *plain, char *key){
             int  newkey = keyint/26;
             newkey = keyint - (26*newkey);
             int newelint = el+newkey;
-            if(newelint > 122){
-                newelint = newelint - 122;
-                newelint = newelint + 96;
+            if(newelint > 90){
+                newelint = newelint - 90;
+                newelint = newelint + 64;
             }
             char newel = newelint;
             newplain[i] = newel;

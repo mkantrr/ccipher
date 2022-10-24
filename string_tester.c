@@ -31,8 +31,10 @@ int main(int argc, char **argv){
                 fgets(stringx, 100, stdin);
                 printf("\n");
             if(strcmp(cip, "ca") == 0){
+                stringx[strcspn(stringx, "\n")]=0;
                 printf("Enter key (Enter d for default): ");
                 fgets(key, 100, stdin);
+                key[strcspn(stringx, "\n")]=0;
                 if(key[0] == 'd'){
                     printf("Using default key.");
                     printf("\n");
@@ -51,7 +53,6 @@ int main(int argc, char **argv){
                     printf("\n");
                     str->print(str, PLAIN);
                 }else{
-                    printf("Using default key.");
                     printf("\n");
                     printf("Plain text string:\n");
                     string *str = encrypt_string(CAESAR, stringx, key);
