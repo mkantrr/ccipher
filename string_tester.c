@@ -18,12 +18,7 @@ int main(int argc, char **argv){
         printf("     0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c}\n");
         char key[100];
         char stringx[100];
-<<<<<<< HEAD
-        char cip[2];
-        getchar();
-=======
         char cip[3];
->>>>>>> 54af9b9d456932892ec9909d6ced064366aeaff7
         while(1){
             printf("Enter command - qu(it), ca(esar), au(gustus), ae(s): ");
             fgets(cip, 3, stdin);

@@ -16,5 +16,6 @@ string *new_cipher(char *ciph, int len, int roundup);
 string *encrypt_string(cipher c, char *s, char *key);
 char *decrypt_string(cipher c, string *str, char *key);
 void setiv_string(char *newiv);
+void toHex(char *s);
 void print_C_string(char *s);
 #endif // _MY_STRING_H_

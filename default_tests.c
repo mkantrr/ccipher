@@ -3,12 +3,6 @@
 #include <string.h>
 #include "caesar.h"
 #include "strings.h"
-<<<<<<< HEAD
-#include <string.h>
-#include "caesar.h"
-#include "strings.h"
-=======
->>>>>>> 54af9b9d456932892ec9909d6ced064366aeaff7
 #include "augustus.h"
 #include "aes_cbc.h"
 void default_tests() {
