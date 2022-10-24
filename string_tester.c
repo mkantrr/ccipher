@@ -51,16 +51,22 @@ int main(int argc, char **argv){
                     printf("\n");
                     str->print(str, PLAIN);
                 }else{
+                    printf("Using default key.");
                     printf("\n");
                     printf("Plain text string:\n");
                     string *str = encrypt_string(CAESAR, stringx, key);
-                    printf("len: %d\n", str->len);
-                    printf("%s\n", str->plain);
+                    str->print(str, PLAIN);
                     printf("\n");
                     printf("Cipher text string:\n");
-                    printf("len: %d\n", str->len);
-                    printf("%s\n", str->cipher);
+                    str->print(str, CIPHER);
                     printf("\n");
+                    printf("Decrypted input: \n");
+                    char *s = decrypt_string(CAESAR, str, key);
+                    printf("len: %d\n", str->len);
+                    print_C_string(s);
+                    printf(" | %s\n", str->plain);
+                    printf("\n");
+                    str->print(str, PLAIN);
                 }
             }
             if(strcmp(cip, "au") == 0){ //Add Augustus cipher user interface here
