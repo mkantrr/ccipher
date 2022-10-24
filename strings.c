@@ -53,47 +53,45 @@ void print2(string *self, string_type st) {
   }
 }
 string *new_plain(char *plain, int roundup){
-    int size = 8;
     int plainsize = strlen(plain);
     if(roundup > 0){
-        while(size%16 != 0){
-            size++;
+        while(plainsize % 16 != 0){
+            plainsize++;
         }
         for(int i=0;i<roundup-1;i++){
-            size = size + 16;
+            plainsize = plainsize + 16;
         }
     }
     string *str = malloc(sizeof(string));
-    str->plain = malloc(size);
-    char newstr[size];
-    for(int a=0;a<size;a++){
+    str->plain = malloc(plainsize);
+    char newstr[plainsize];
+    for(int a=0;a<plainsize;a++){
         newstr[a] = '\0';
     }
     for(int a=0;a<strlen(plain);a++){
         newstr[a] = plain[a];
     }
     strcpy(str->plain, newstr);
-    str->len = plainsize;
+    str->len = strlen(plain);
     str->print = print1;
     str -> encrypt = encrypt_string;
     str -> decrypt = decrypt_string;
     return str;
 }
 string *new_cipher(char *ciph, int len, int roundup){
-    int size = 8;
     int ciphsize = strlen(ciph);
     if(roundup > 0){
-        while(size%16 != 0){
-            size++;
+        while(ciphsize % 16 != 0){
+            ciphsize++;
         }
         for(int i=0;i<roundup-1;i++){
-            size = size + 16;
+            ciphsize = ciphsize + 16;
         }
     }
     string *str = malloc(sizeof(string));
-    str -> cipher = malloc(size);
-    char newstr[size];
-    for(int a=0;a<size;a++){
+    str -> cipher = malloc(ciphsize);
+    char newstr[ciphsize];
+    for(int a=0;a<ciphsize;a++){
         newstr[a] = '\0';
     }
     for(int a=0;a<strlen(ciph);a++){
@@ -116,6 +114,9 @@ string *encrypt_string(cipher c, char *s, char *key){
        str -> print = print1;
     }
     else if(c == AES) {
+      if (str -> cipher) {
+        strcpy(newstr, str -> cipher);
+      } else {
       struct AES_ctx ctx;
       AES_init_ctx_iv(&ctx, (uint8_t*)key, iv);
       uint32_t buf_length;
@@ -131,7 +132,7 @@ string *encrypt_string(cipher c, char *s, char *key){
         char buffer[buf_length];
         memcpy(buffer, s, buf_length);
         AES_CBC_encrypt_buffer(&ctx, (uint8_t*)buffer, buf_length);
-        newstr = buffer; 
+        newstr = buffer;
       } else {
         buf_length = 16;
         char buffer[16];
@@ -139,12 +140,13 @@ string *encrypt_string(cipher c, char *s, char *key){
         AES_CBC_encrypt_buffer(&ctx, (uint8_t*)buffer, buf_length);
         newstr = buffer;
       }
-      str -> print = print2;
       str -> len = buf_length;
-      } else if (c == AUGUSTUS) {
-        newstr = augustus_encrypt(s, key);
-        str -> print = print1;
       }
+      str -> print = print2;
+    } else if (c == AUGUSTUS) {
+      newstr = augustus_encrypt(s, key);
+      str -> print = print1;
+    }
     // if statements regarding which cipher is being used
     str->cipher = newstr;
     str->len = slen;
@@ -152,12 +154,15 @@ string *encrypt_string(cipher c, char *s, char *key){
 
 }
 char *decrypt_string(cipher c, string *str, char *key){
-    // printf("%ld\n", sizeof(char)*strlen(str->cipher));
-    char *newstr = str->cipher;
-    if(c == CAESAR){
-      newstr = caesar_decrypt(newstr, key);
-      str -> print = print1;
-    } else if(c == AES) {
+  // printf("%ld\n", sizeof(char)*strlen(str->cipher));
+  char *newstr = str->cipher;
+  if(c == CAESAR){
+    newstr = caesar_decrypt(newstr, key);
+    str -> print = print1;
+  } else if(c == AES) {
+    if (str -> plain) {
+      strcpy(newstr, str -> plain);
+    } else {
       struct AES_ctx ctx;
 
       AES_init_ctx_iv(&ctx, (uint8_t*)key, iv);
@@ -174,7 +179,7 @@ char *decrypt_string(cipher c, string *str, char *key){
         char buffer[buf_length];
         memcpy(buffer, newstr, buf_length);
         AES_CBC_decrypt_buffer(&ctx, (uint8_t*)buffer, buf_length);
-        newstr = buffer; 
+        newstr = buffer;
       } else {
         buf_length = 16;
         char buffer[16];
@@ -183,6 +188,7 @@ char *decrypt_string(cipher c, string *str, char *key){
         newstr = buffer;
       }
       str -> len = buf_length;
+      }
       str -> print = print2;   
     } else if (c == AUGUSTUS) {
         newstr = augustus_decrypt(newstr, key);
@@ -204,6 +210,6 @@ void toHex(char *s) {
 void print_C_string(char *s){
     int ssize = sizeof(s);
     for(int i=0;i<ssize;i++){
-      printf("%c ",s[i]);
+      printf("%c",s[i]);
     }
 }
