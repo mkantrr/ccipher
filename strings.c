@@ -31,7 +31,7 @@ void print2(string *self, string_type st) {
     printf(" | ");
     for (int i = 0; i < 16; i++) {
       if (isprint(self -> plain[i])) {
-        printf("%c" , self -> plain[i]);
+        printf("%c " , self -> plain[i]);
       } else {
         printf(" ");
       }
@@ -110,27 +110,35 @@ string *encrypt_string(cipher c, char *s, char *key){
     string *str = malloc(sizeof(string));
     int slen = strlen(s);
     str -> plain = s;
-    char *newstr = NULL;
+    char *newstr = str -> plain;
     if(c == CAESAR){
        newstr = caesar_encrypt(s, key);
        str -> print = print1;
     }
     else if(c == AES) {
       struct AES_ctx ctx;
-
       AES_init_ctx_iv(&ctx, (uint8_t*)key, iv);
       uint32_t buf_length;
-      if (strlen(s) < 16 || strlen(s) == 16) {
+      if (strlen(s) == 16) {
         buf_length = strlen(s);
+        char buffer[16];
+        memcpy(buffer, s, buf_length);
+        AES_CBC_encrypt_buffer(&ctx, (uint8_t*)buffer, buf_length);
+        newstr = buffer;
+      } else if (strlen(newstr) > 16) {
+        uint32_t twice_length = strlen(s) * ((strlen(s) / 16) + 1);
+        buf_length = twice_length - (twice_length % 16);
+        char buffer[buf_length];
+        memcpy(buffer, s, buf_length);
+        AES_CBC_encrypt_buffer(&ctx, (uint8_t*)buffer, buf_length);
+        newstr = buffer; 
       } else {
-        buf_length = (strlen(s) * ((strlen(s) / 16) + 1)) - ((strlen(s) % 10) - 1);
+        buf_length = 16;
+        char buffer[16];
+        memcpy(buffer, s, buf_length);
+        AES_CBC_encrypt_buffer(&ctx, (uint8_t*)buffer, buf_length);
+        newstr = buffer;
       }
-      if (buf_length % 16 == 0) {
-        AES_CBC_encrypt_buffer(&ctx, (uint8_t*)s, buf_length);
-      } else {
-        newstr = NULL;
-      }
-      newstr = s;
       str -> print = print2;
       str -> len = buf_length;
       } else if (c == AUGUSTUS) {
@@ -146,7 +154,6 @@ string *encrypt_string(cipher c, char *s, char *key){
 char *decrypt_string(cipher c, string *str, char *key){
     // printf("%ld\n", sizeof(char)*strlen(str->cipher));
     char *newstr = str->cipher;
-    newstr = str->cipher;
     if(c == CAESAR){
       newstr = caesar_decrypt(newstr, key);
       str -> print = print1;
@@ -155,15 +162,25 @@ char *decrypt_string(cipher c, string *str, char *key){
 
       AES_init_ctx_iv(&ctx, (uint8_t*)key, iv);
       uint32_t buf_length;
-      if (strlen(newstr) < 16 || strlen(newstr) == 16) {
+      if (strlen(newstr) == 16) {
         buf_length = strlen(newstr);
+        char buffer[16];
+        memcpy(buffer, newstr, buf_length);
+        AES_CBC_decrypt_buffer(&ctx, (uint8_t*)buffer, buf_length);
+        newstr = buffer;
+      } else if (strlen(newstr) > 16) {
+        uint32_t twice_length = strlen(newstr) * ((strlen(newstr) / 16) + 1);
+        buf_length = twice_length - (twice_length % 16);
+        char buffer[buf_length];
+        memcpy(buffer, newstr, buf_length);
+        AES_CBC_decrypt_buffer(&ctx, (uint8_t*)buffer, buf_length);
+        newstr = buffer; 
       } else {
-        buf_length = (strlen(newstr) * ((strlen(newstr) / 16) + 1)) - ((strlen(newstr) % 10) - 1);
-      }
-      if (buf_length % 16 == 0) {
-        AES_CBC_decrypt_buffer(&ctx, (uint8_t*)newstr, buf_length);
-      } else {
-        newstr = NULL;
+        buf_length = 16;
+        char buffer[16];
+        memcpy(buffer, newstr, buf_length);
+        AES_CBC_decrypt_buffer(&ctx, (uint8_t*)buffer, buf_length);
+        newstr = buffer;
       }
       str -> len = buf_length;
       str -> print = print2;   
