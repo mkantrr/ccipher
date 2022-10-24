@@ -12,10 +12,14 @@ uint8_t iv[] = {0x10, 0x11, 0x12, 0x13, 0x14, 0x05, 0x06, 0x07,
 
 void print1(string *self, string_type st){
     if(st == PLAIN){
-        printf("%s\n", self->plain);
+        printf("len: %d\n", self->len);
+        print_C_string(self->plain);
+        printf(" | %s\n", self->plain);
     }
     else {
-        printf("%s\n", self->cipher);
+        printf("len: %d\n", self->len);
+        print_C_string(self->cipher);
+        printf(" | %s\n", self->cipher);
     }
 }
 
@@ -118,7 +122,6 @@ string *encrypt_string(cipher c, char *s, char *key){
       uint8_t key_arr[key_len + 1];
       char hexNum[3];
       hexNum[2] = 0;
-      printf("%d\n", key_len);
       for (int i = 0; i < key_len; i++) {
         printf("%d\n", i);
         key = strchr(key, ' ');
@@ -203,8 +206,16 @@ char *decrypt_string(cipher c, string *str, char *key){
     return newstr;
 }
 void print_C_string(char *s){
+<<<<<<< HEAD
   for (int i = 0; i < strlen(s); i++) {
     printf("%s", s);
   }
 
 }
+=======
+    int ssize = sizeof(s);
+    for(int i=0;i<ssize;i++){
+      printf("%x ",s[i]);
+    }
+}
+>>>>>>> 54af9b9d456932892ec9909d6ced064366aeaff7

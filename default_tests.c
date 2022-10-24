@@ -3,9 +3,12 @@
 #include <string.h>
 #include "caesar.h"
 #include "strings.h"
+<<<<<<< HEAD
 #include <string.h>
 #include "caesar.h"
 #include "strings.h"
+=======
+>>>>>>> 54af9b9d456932892ec9909d6ced064366aeaff7
 #include "augustus.h"
 #include "aes_cbc.h"
 void default_tests() {
@@ -29,7 +32,7 @@ void default_tests() {
     printf("ceasarEncrypt(gusty, 11): %s\n", caesar_encrypt("gusty", "11"));
     printf("augustusEncrypt(gusty, 11): %s\n", augustus_encrypt("gusty", "11"));
     printf("augustusDecript(augustusEncrypt(gusty, 11), 11): %s\n", augustus_decrypt(augustus_encrypt("gusty", "11"), "11"));
-    // printf("XXaugustusDecript(augustusEncrypt(gusty, 11), 11): %s\n", decrypt_string(AUGUSTUS, encrypt_string(AUGUSTUS, "gusty", "11"), "11"));
+    printf("XXaugustusDecript(augustusEncrypt(gusty, 11), 11): %s\n", decrypt_string(AUGUSTUS, encrypt_string(AUGUSTUS, "gusty", "11"), "11"));
 
     string *str = encrypt_string(CAESAR, "gusty !15:","2");
     printf("%s\n", str->plain);
@@ -40,13 +43,13 @@ void default_tests() {
     char *plain = decrypt_string(CAESAR, str, "2");
     printf("%s\n", plain);
 
-    // str = encrypt_string(AUGUSTUS, "gusty", "1");
-    // printf("\n%s\n", str->plain);
-    // printf("%s\n", str->cipher);
-    // str->print(str, PLAIN);
-    // str->print(str, CIPHER);
-    // plain = decrypt_string(AUGUSTUS, str, "1");
-    // printf("%s\n", plain);
+    str = encrypt_string(AUGUSTUS, "gusty", "1");
+    printf("\n%s\n", str->plain);
+    printf("%s\n", str->cipher);
+    str->print(str, PLAIN);
+    str->print(str, CIPHER);
+    plain = decrypt_string(AUGUSTUS, str, "1");
+    printf("%s\n", plain);
 
     char *test_str = "ABCDEFGHIJKLMNOPZac"; // test_str has 19 characters
     uint8_t key[] = { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c };
@@ -89,47 +92,45 @@ void default_tests() {
        decrypt_string returns a char *.
     */
     
-    // char in_key[] = { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c, 0 };
-    // string *b = encrypt_string(AES, test_str, in_key); 
-    // printf("\nHex of plain test_str:\n");
-    // b->print(b, PLAIN);
-    // printf("\nHex of cipher test_str:\n");
-    // b->print(b, CIPHER);
-    // char *s = decrypt_string(AES, b, in_key);
-    // printf("Hex of decrypted test_str:\n");
-    // print_C_string(s);
-    // printf("Plaintext of decypted test_str: %s\n", s);
-
     char in_key[] = { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c, 0 };
-      string *b = encrypt_string(AES, test_str, in_key); 
-      printf("\nHex of plain test_str:\n");
-      b->print(b, PLAIN);
-      printf("\nHex of cipher test_str:\n");
-      b->print(b, CIPHER);
-      char *s = decrypt_string(AES, b, in_key);
-      printf("Hex of decrypted test_str:\n");
-      //print_C_string(s);
-      //printf("Plaintext of decypted test_str: %s\n", s);
-
-      printf("NEW TEST\n");
-      char in_key2[] = { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c, 0 };
-      char cipher_text[] = { 0xcb,0x0d,0x58,0xf5,0x16,0xa7,0x4e,0x4a,0xfb,0xb0,0x9e,0xaa,0x92,0x38,0x91,0x4f,
-                              0xe0,0x98,0x19,0x99,0x49,0x0d,0xc2,0xef,0xc9,0xaf,0x36,0x75,0xbf,0xe2,0x80,0xd9 };
-      string *x = new_cipher(cipher_text, 32, 0);
-       x->print(x, CIPHER);
-      // s = x->decrypt(AES, x, in_key); 
-      s = decrypt_string(AES, x, in_key2);
-      x->print(x, PLAIN);
-      x->print(x, CIPHER);
-      printf("s: %p\n", s);
-      //print_C_string(s);
-
-    string *b = encrypt_string(CAESAR, "Be sure to drink your Ovaltine!", "13"); //
+    string *b = encrypt_string(AES, test_str, in_key); 
+    printf("XXX");
     printf("\nHex of plain test_str:\n");
     b->print(b, PLAIN);
     printf("\nHex of cipher test_str:\n");
     b->print(b, CIPHER);
-    char *s = decrypt_string(CAESAR, b, "13");
+    char *s = decrypt_string(AES, b, in_key);
+    printf("Hex of decrypted test_str:\n");
+    print_C_string(s);
+    printf("Plaintext of decypted test_str: %s\n", s);
+
+    printf("NEW TEST\n");
+    char in_key2[] = { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c, 0 };
+    char cipher_text[] = { 0xcb,0x0d,0x58,0xf5,0x16,0xa7,0x4e,0x4a,0xfb,0xb0,0x9e,0xaa,0x92,0x38,0x91,0x4f,
+                           0xe0,0x98,0x19,0x99,0x49,0x0d,0xc2,0xef,0xc9,0xaf,0x36,0x75,0xbf,0xe2,0x80,0xd9 };
+    string *x = new_cipher(cipher_text, 32, 0);
+    x->print(x, CIPHER);
+    //s = x->decrypt(AES, x, in_key); 
+    s = decrypt_string(AES, x, in_key2);
+    //x->print(x, PLAIN);
+    x->print(x, CIPHER);
+    printf("s: %p\n", s);
+    print_C_string(s);
+
+    printf("NEW TEST 2\n");
+    string *y = new_plain("Camp Giraffy", 1);
+    y = y->encrypt(AES, "Camp Giraffy", in_key);
+    y->print(y, PLAIN);
+    y->print(y, CIPHER);
+    s = y->decrypt(AES, y, in_key);
+    print_C_string(s);
+
+    b = encrypt_string(CAESAR, "Be sure to drink your Ovaltine!", "13"); 
+    printf("\nHex of plain test_str:\n");
+    b->print(b, PLAIN);
+    printf("\nHex of cipher test_str:\n");
+    b->print(b, CIPHER);
+    s = decrypt_string(CAESAR, b, "13");
     printf("Hex of decrypted test_str:\n");
     print_C_string(s);
     printf("Plaintext of decypted test_str: %s\n", s);
