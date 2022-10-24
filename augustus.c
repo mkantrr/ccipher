@@ -14,7 +14,6 @@ int wrapAround(int start, int key) {
     if (diff < 0) {
         while (diff < 0) {
             diff = 26-abs(diff);
-            printf("Diff: %d\n", diff);
         }
         wrap = diff;
     } else {
@@ -156,7 +155,6 @@ char *augustus_decrypt(char *cipher, char *key) {
         decrypted[i] = newChar;
 
     }
-    printf("%s\n", decrypted);
 
     for (int i = 0; i < cipherLen; i++) {
         char currentChar = decrypted[i];
@@ -165,6 +163,5 @@ char *augustus_decrypt(char *cipher, char *key) {
         newChar = caesarRevert(currentChar, intKey);
         decrypted[i] = newChar;
     }
-    printf("%s\n", decrypted);
     return decrypted;
 }
