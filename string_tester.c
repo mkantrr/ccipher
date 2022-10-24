@@ -24,13 +24,13 @@ int main(int argc, char **argv){
             fgets(cip, 3, stdin);
             getchar();
             printf("\n");
-            if(strcmp(cip, "q") == 0){
+            if(strcmp(cip, "qu") == 0){
                 break;
-            }
-            if(strcmp(cip, "ca") == 0){
+            } else {
                 printf("Enter string: ");
                 fgets(stringx, 100, stdin);
                 printf("\n");
+            if(strcmp(cip, "ca") == 0){
                 printf("Enter key (Enter d for default): ");
                 fgets(key, 100, stdin);
                 if(key[0] == 'd'){
@@ -70,9 +70,6 @@ int main(int argc, char **argv){
                 }
             }
             if(strcmp(cip, "au") == 0){ //Add Augustus cipher user interface here
-                printf("Enter string: ");
-                fgets(stringx, 100, stdin);
-                printf("\n");
                 printf("Enter key (Enter d for default): ");
                 fgets(key, 100, stdin);
                 printf("%s\n", key);
@@ -153,6 +150,7 @@ int main(int argc, char **argv){
                 printf("len: %d", str -> len);
                 str -> print(str, CIPHER);
               }
+            }
             }
         }
     }else {
