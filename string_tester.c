@@ -70,9 +70,10 @@ int main(int argc, char **argv){
                 }
             }
             if(strcmp(cip, "au") == 0){ //Add Augustus cipher user interface here
+                stringx[strcspn(stringx, "\n")] = 0;
                 printf("Enter key (Enter d for default): ");
                 fgets(key, 100, stdin);
-                printf("%s\n", key);
+                key[strcspn(key, "\n")]=0;
                 if(key[0] == 'd'){
                     printf("\n");
                     printf("Plain text string: \n");
