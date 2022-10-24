@@ -12,10 +12,14 @@ uint8_t iv[] = {0x10, 0x11, 0x12, 0x13, 0x14, 0x05, 0x06, 0x07,
 
 void print1(string *self, string_type st){
     if(st == PLAIN){
-        printf("%s\n", self->plain);
+        printf("len: %d\n", self->len);
+        print_C_string(self->plain);
+        printf(" | %s\n", self->plain);
     }
     else {
-        printf("%s\n", self->cipher);
+        printf("len: %d\n", self->len);
+        print_C_string(self->cipher);
+        printf(" | %s\n", self->cipher);
     }
 }
 
@@ -160,14 +164,9 @@ string *encrypt_string(cipher c, char *s, char *key){
       str -> print = print2;
       str -> len = buf_length;
       } else if (c == AUGUSTUS) {
-<<<<<<< HEAD
         newstr = augustus_encrypt(s, key);
         str -> print = print1;
       }
-=======
-
-      } else {}
->>>>>>> i;alksdjfa
     // if statements regarding which cipher is being used
     str->cipher = newstr;
     str->len = slen;
@@ -208,5 +207,8 @@ char *decrypt_string(cipher c, string *str, char *key){
     return newstr;
 }
 void print_C_string(char *s){
-    printf("%d\n", s[0]);
+    int ssize = sizeof(s);
+    for(int i=0;i<ssize;i++){
+      printf("%x ",s[i]);
+    }
 }

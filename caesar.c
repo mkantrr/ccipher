@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 char *caesar_encrypt(char *plain, char *key){
-    printf("AAA\n");
     int len = strlen(plain);
     int keyint = atoi(key);
     char newplain[len+1];

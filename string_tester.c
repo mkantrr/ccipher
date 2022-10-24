@@ -18,15 +18,16 @@ int main(int argc, char **argv){
         printf("     0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c}\n");
         char key[100];
         char stringx[100];
-        char cip[2];
+        char cip[3];
         while(1){
-            printf("Enter command - q(uit), c(aesar), au(gustus), ae(s): ");
-            fgets(cip, 2, stdin);
+            printf("Enter command - qu(it), ca(esar), au(gustus), ae(s): ");
+            fgets(cip, 3, stdin);
+            getchar();
             printf("\n");
             if(strcmp(cip, "q") == 0){
                 break;
             }
-            else if(strcmp(cip, "c") == 0){
+            if(strcmp(cip, "ca") == 0){
                 printf("Enter string: ");
                 fgets(stringx, 100, stdin);
                 printf("\n");
@@ -37,13 +38,18 @@ int main(int argc, char **argv){
                     printf("\n");
                     printf("Plain text string:\n");
                     string *str = encrypt_string(CAESAR, stringx, defcaesar);
-                    printf("len: %d\n", str->len);
-                    printf("%s\n", str->plain);
+                    str->print(str, PLAIN);
                     printf("\n");
                     printf("Cipher text string:\n");
-                    printf("len: %d\n", str->len);
-                    printf("%s\n", str->cipher);
+                    str->print(str, CIPHER);
                     printf("\n");
+                    printf("Decrypted input: \n");
+                    char *s = decrypt_string(CAESAR, str, defcaesar);
+                    printf("len: %d\n", str->len);
+                    print_C_string(s);
+                    printf(" | %s\n", str->plain);
+                    printf("\n");
+                    str->print(str, PLAIN);
                 }else{
                     printf("\n");
                     printf("Plain text string:\n");
@@ -57,7 +63,7 @@ int main(int argc, char **argv){
                     printf("\n");
                 }
             }
-            else if(strcmp(cip, "au") == 0){ //Add Augustus cipher user interface here
+            if(strcmp(cip, "au") == 0){ //Add Augustus cipher user interface here
                 printf("Enter string: ");
                 fgets(stringx, 100, stdin);
                 printf("\n");
@@ -90,7 +96,7 @@ int main(int argc, char **argv){
 
                 }
             }
-            else if(strcmp(cip, "ae") == 0){
+            if(strcmp(cip, "ae") == 0){
               printf("Enter key (Enter d for default): ");
               fgets(key, 100, stdin);
               if (key[0] == 'd') {

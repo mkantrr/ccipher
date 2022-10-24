@@ -1,15 +1,9 @@
 #include <stdio.h>
-<<<<<<< HEAD
 #include <ctype.h>
 #include <string.h>
 #include "caesar.h"
 #include "strings.h"
-=======
-#include <string.h>
-#include "caesar.h"
-#include "strings.h"
 #include "augustus.h"
->>>>>>> i;alksdjfa
 #include "aes_cbc.h"
 void default_tests() {
     printf("ceasarEncrypt(gusty, 1): %s\n", caesar_encrypt("gusty", "1"));
@@ -127,12 +121,12 @@ void default_tests() {
       printf("s: %p\n", s);
       //print_C_string(s);
 
-    string *b = encrypt_string(CAESAR, "Be sure to drink your Ovaltine!", "13"); //
+    b = encrypt_string(CAESAR, "Be sure to drink your Ovaltine!", "13"); //
     printf("\nHex of plain test_str:\n");
     b->print(b, PLAIN);
     printf("\nHex of cipher test_str:\n");
     b->print(b, CIPHER);
-    char *s = decrypt_string(CAESAR, b, "13");
+    s = decrypt_string(CAESAR, b, "13");
     printf("Hex of decrypted test_str:\n");
     print_C_string(s);
     printf("Plaintext of decypted test_str: %s\n", s);
