@@ -180,7 +180,7 @@ char *decrypt_string(cipher c, string *str, char *key){
 void toHex(char *s) {
   int ssize = sizeof(s);
   for (int i = 0; i < ssize; i++) {
-    printf("%s ", s[i]);
+    printf("%x ", s[i]);
   }
 }
 
