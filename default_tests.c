@@ -102,26 +102,27 @@ void default_tests() {
       //print_C_string(s);
       //printf("Plaintext of decypted test_str: %s\n", s);
 
-      // printf("NEW TEST\n");
-      // char in_key2[] = { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c, 0 };
-      // char cipher_text[] = { 0xcb,0x0d,0x58,0xf5,0x16,0xa7,0x4e,0x4a,0xfb,0xb0,0x9e,0xaa,0x92,0x38,0x91,0x4f,
-      //                        0xe0,0x98,0x19,0x99,0x49,0x0d,0xc2,0xef,0xc9,0xaf,0x36,0x75,0xbf,0xe2,0x80,0xd9 };
-      // string *x = new_cipher(cipher_text, 32, 0);
-      // x->print(x, CIPHER);
-      // //s = x->decrypt(AES, x, in_key); 
-      // s = decrypt_string(AES, x, in_key2);
-      // //x->print(x, PLAIN);
-      // x->print(x, CIPHER);
-      // printf("s: %p\n", s);
-      // print_C_string(s);
+      printf("NEW TEST\n");
+      char in_key2[] = { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c, 0 };
+      char cipher_text[] = { 0xcb,0x0d,0x58,0xf5,0x16,0xa7,0x4e,0x4a,0xfb,0xb0,0x9e,0xaa,0x92,0x38,0x91,0x4f,
+                              0xe0,0x98,0x19,0x99,0x49,0x0d,0xc2,0xef,0xc9,0xaf,0x36,0x75,0xbf,0xe2,0x80,0xd9 };
+      string *x = new_cipher(cipher_text, 32, 0);
+       x->print(x, CIPHER);
+      // s = x->decrypt(AES, x, in_key); 
+      s = decrypt_string(AES, x, in_key2);
+      x->print(x, PLAIN);
+      x->print(x, CIPHER);
+      printf("s: %p\n", s);
+      //print_C_string(s);
 
-      // printf("NEW TEST 2\n");
-      // string *y = new_plain("Camp Giraffy", 1);
-      // y = y->encrypt(AES, "Camp Giraffy", in_key);
-      // y->print(y, PLAIN);
-      // y->print(y, CIPHER);
-      // s = y->decrypt(AES, y, in_key);
-      // print_C_string(s);
+      printf("NEW TEST 2\n");
+      string *y = new_plain("Camp Giraffy", 1);
+      y = y->encrypt(AES, "Camp Giraffy", in_key);
+      y->print(y, PLAIN);
+      y->print(y, CIPHER);
+      s = y->decrypt(AES, y, in_key);
+      //print_C_string(s);
+
 
       // b = encrypt_string(CAESAR, "Be sure to drink your Ovaltine!", "13"); 
       // printf("\nHex of plain test_str:\n");

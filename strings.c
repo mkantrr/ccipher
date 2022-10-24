@@ -1,17 +1,52 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "strings.h"
 #include "caesar.h"
 #include "augustus.h"
 #include "aes_cbc.h"
+
+uint8_t iv[] = {0x10, 0x11, 0x12, 0x13, 0x14, 0x05, 0x06, 0x07,
+                    0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
+
 void print1(string *self, string_type st){
     if(st == PLAIN){
         printf("%s\n", self->plain);
     }
-    if(st == CIPHER){
+    else {
         printf("%s\n", self->cipher);
     }
+}
+
+void print2(string *self, string_type st) {
+  if (st == PLAIN) {
+    for (int i = 0; i < 16; i++) {
+      printf("%.2x " , self -> plain[i]);
+    }
+    printf(" | ");
+    for (int i = 0; i < 16; i++) {
+      if (isprint(self -> plain[i])) {
+        printf("%c" , self -> plain[i]);
+      } else {
+        printf(" ");
+      }
+    }
+    printf("\n");
+  } else {
+    for (int i = 0; i < 16; i++) {
+      printf("%.2x " , self -> cipher[i]);
+    }
+    printf(" | ");
+    for (int i = 0; i < 16; i++) {
+      if (isprint(self -> cipher[i])) {
+        printf("%c" , self -> cipher[i]);
+      } else {
+        printf(" ");
+      }
+    }
+    printf("\n");
+  }
 }
 string *new_plain(char *plain, int roundup){
     int size = 8;
@@ -74,13 +109,11 @@ string *encrypt_string(cipher c, char *s, char *key){
     char *newstr = NULL;
     if(c == CAESAR){
        newstr = caesar_encrypt(s, key);
+       str -> print = print1;
     }
     else if(c == AES) {
       struct AES_ctx ctx;
 
-      uint8_t iv[] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                    0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
-        
       AES_init_ctx_iv(&ctx, (uint8_t*)key, iv);
       uint32_t buf_length;
       if (strlen(s) < 16 || strlen(s) == 16) {
@@ -94,14 +127,15 @@ string *encrypt_string(cipher c, char *s, char *key){
         newstr = NULL;
       }
       newstr = s;
+      str -> print = print2;
       str -> len = buf_length;
       } else if (c == AUGUSTUS) {
         newstr = augustus_encrypt(s, key);
-      } else {}
+        str -> print = print1;
+      }
     // if statements regarding which cipher is being used
     str->cipher = newstr;
     str->len = slen;
-    str->print = print1;
     return str;
 
 }
@@ -110,12 +144,10 @@ char *decrypt_string(cipher c, string *str, char *key){
     newstr = str->cipher;
     if(c == CAESAR){
         newstr = caesar_decrypt(newstr, key);
+        str -> print = print1;
     } else if(c == AES) {
       struct AES_ctx ctx;
 
-      uint8_t iv[] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                    0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
-        
       AES_init_ctx_iv(&ctx, (uint8_t*)key, iv);
       uint32_t buf_length;
       if (strlen(newstr) < 16 || strlen(newstr) == 16) {
@@ -129,9 +161,11 @@ char *decrypt_string(cipher c, string *str, char *key){
         newstr = NULL;
       }
       str -> len = buf_length;
+      str -> print = print2;
       } else if (c == AUGUSTUS) {
         newstr = augustus_decrypt(newstr, key);
-      } else {}
+        str -> print = print1;
+      }
 
     //if statements again regarding which cipher
     str->plain = newstr;

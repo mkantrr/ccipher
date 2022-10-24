@@ -16,14 +16,12 @@ int main(int argc, char **argv){
         printf("Augustus: %s\n", defaugustus);
         printf("AES: 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,\n"); 
         printf("     0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c}\n");
-        int loopvar = 0;
         char key[100];
         char stringx[100];
         char cip[2];
-        while(loopvar == 0){
+        while(1){
             printf("Enter command - q(uit), c(aesar), au(gustus), ae(s): ");
             fgets(cip, 2, stdin);
-            getchar();
             printf("\n");
             if(strcmp(cip, "q") == 0){
                 break;
@@ -101,21 +99,39 @@ int main(int argc, char **argv){
                 printf("Plain text string:\n");
                 string *str = encrypt_string(AES, stringx, defaes);
                 printf("len: %d", str -> len);
-                for (int i = 0; i < str -> len; i++) {
-                  // Add printer function
-                }
-              }
-              else {
-
-                int key_len = (strlen(key)/3) + 1;
-                char *key_arr[key_len + 1];
-
-                string *str = encrypt_string(AES, stringx, key);
-                if (str -> len % 16 != 0) {
+                str -> print(str, PLAIN);
+                printf("\n");
+                printf("Cipher text sring:\n");
+                printf("len: %d", str -> len);
+                str -> print(str, CIPHER);
+              } else {
+                uint8_t *use_key = NULL;
+                string *str = NULL;
+                if (strlen((char*)use_key) % 16 != 0) {
                   printf("AES Key not 16 bytes. Using default key.");
+                  str = encrypt_string(AES, stringx, defaes);
                 } else {
-                  // add printer function
+
+                  unsigned int i, j, ii, jj;
+                  for (j = 0, i = 0; i < strlen(key); i += 2, ++j) {
+                    if (key[i] == ' ') {
+                      i--;
+                      continue;
+                    }
+                    ii = key[i] > '9' ? key[i] - 'A' + 10 : key[i] - '0';
+                    jj = key[i+1] > '9' ? key[i+1] - 'A' + 10 : key[i] - '0';
+
+                    use_key[j] = (ii << 4) | jj;
+                  }
+                  str = encrypt_string(AES, stringx, (char*)use_key);
                 }
+                printf("Plain text string:\n");
+                printf("len: %d", str -> len);
+                str -> print(str, PLAIN);
+                printf("\n");
+                printf("Cipher text sring:\n");
+                printf("len: %d", str -> len);
+                str -> print(str, CIPHER);
               }
             }
         }
