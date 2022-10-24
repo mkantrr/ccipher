@@ -122,7 +122,6 @@ string *encrypt_string(cipher c, char *s, char *key){
       uint8_t key_arr[key_len + 1];
       char hexNum[3];
       hexNum[2] = 0;
-      printf("%d\n", key_len);
       for (int i = 0; i < key_len; i++) {
         printf("%d\n", i);
         key = strchr(key, ' ');
