@@ -19,6 +19,7 @@ int main(int argc, char **argv){
         char key[100];
         char stringx[100];
         char cip[2];
+        getchar();
         while(1){
             printf("Enter command - q(uit), c(aesar), au(gustus), ae(s): ");
             fgets(cip, 2, stdin);

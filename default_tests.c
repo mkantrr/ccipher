@@ -1,15 +1,12 @@
 #include <stdio.h>
-<<<<<<< HEAD
 #include <ctype.h>
 #include <string.h>
 #include "caesar.h"
 #include "strings.h"
-=======
 #include <string.h>
 #include "caesar.h"
 #include "strings.h"
 #include "augustus.h"
->>>>>>> i;alksdjfa
 #include "aes_cbc.h"
 void default_tests() {
     printf("ceasarEncrypt(gusty, 1): %s\n", caesar_encrypt("gusty", "1"));

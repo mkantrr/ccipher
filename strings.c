@@ -160,14 +160,9 @@ string *encrypt_string(cipher c, char *s, char *key){
       str -> print = print2;
       str -> len = buf_length;
       } else if (c == AUGUSTUS) {
-<<<<<<< HEAD
         newstr = augustus_encrypt(s, key);
         str -> print = print1;
       }
-=======
-
-      } else {}
->>>>>>> i;alksdjfa
     // if statements regarding which cipher is being used
     str->cipher = newstr;
     str->len = slen;
@@ -208,5 +203,8 @@ char *decrypt_string(cipher c, string *str, char *key){
     return newstr;
 }
 void print_C_string(char *s){
-    printf("%d\n", s[0]);
+  for (int i = 0; i < strlen(s); i++) {
+    printf("%s", s);
+  }
+
 }
