@@ -2,10 +2,12 @@
 #include <string.h>
 #include <stdlib.h>
 char *caesar_encrypt(char *plain, char *key){
+    printf("AAA\n");
     int len = strlen(plain);
     int keyint = atoi(key);
     char newplain[len+1];
     newplain[len+1] = '\0';
+    
     for(int i=0;i<len;i++){
         char el = plain[i];
         if(el>96 && el<123){
@@ -49,6 +51,7 @@ char *caesar_encrypt(char *plain, char *key){
     for(int i=0;i<strlen(plain);i++){
         newplain2[i] = newplain[i];
     }
+    
     return newplain2;
 }
 char *caesar_decrypt(char *cipher, char *key){
@@ -98,6 +101,7 @@ char *caesar_decrypt(char *cipher, char *key){
         } 
     }
     char *newcipher2 = malloc(sizeof(cipher));
+    
     for(int i=0;i<strlen(cipher);i++){
         newcipher2[i] = newcipher[i];
     }

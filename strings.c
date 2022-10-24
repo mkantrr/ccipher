@@ -114,7 +114,37 @@ string *encrypt_string(cipher c, char *s, char *key){
     else if(c == AES) {
       struct AES_ctx ctx;
 
-      AES_init_ctx_iv(&ctx, (uint8_t*)key, iv);
+      int key_len = (slen/3) + 1;
+      uint8_t key_arr[key_len + 1];
+      char hexNum[3];
+      hexNum[2] = 0;
+      printf("%d\n", key_len);
+      for (int i = 0; i < key_len; i++) {
+        printf("%d\n", i);
+        key = strchr(key, ' ');
+        if (key) {
+          printf("%d\n", i);
+          hexNum[0] = *(key-2);
+          hexNum[1] = *(key-1);
+          key_arr[i] = (char)strtoul(hexNum, NULL, 16);
+
+          key++;
+
+          if (strlen(key) == 2) {
+            i++;
+
+            hexNum[0] = *(key);
+            hexNum[1] = *(key+1);
+            key_arr[i] = (char)strtoul(hexNum, NULL, 16);
+          }
+        }
+      }
+      
+
+      uint8_t iv[] = {0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+                    0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f};
+        
+      AES_init_ctx_iv(&ctx, key_arr, iv);
       uint32_t buf_length;
       if (strlen(s) < 16 || strlen(s) == 16) {
         buf_length = strlen(s);
@@ -130,9 +160,14 @@ string *encrypt_string(cipher c, char *s, char *key){
       str -> print = print2;
       str -> len = buf_length;
       } else if (c == AUGUSTUS) {
+<<<<<<< HEAD
         newstr = augustus_encrypt(s, key);
         str -> print = print1;
       }
+=======
+
+      } else {}
+>>>>>>> i;alksdjfa
     // if statements regarding which cipher is being used
     str->cipher = newstr;
     str->len = slen;
@@ -140,7 +175,8 @@ string *encrypt_string(cipher c, char *s, char *key){
 
 }
 char *decrypt_string(cipher c, string *str, char *key){
-    char *newstr = malloc(sizeof(str->cipher));
+    // printf("%ld\n", sizeof(char)*strlen(str->cipher));
+    char *newstr = str->cipher;
     newstr = str->cipher;
     if(c == CAESAR){
         newstr = caesar_decrypt(newstr, key);
@@ -170,4 +206,7 @@ char *decrypt_string(cipher c, string *str, char *key){
     //if statements again regarding which cipher
     str->plain = newstr;
     return newstr;
+}
+void print_C_string(char *s){
+    printf("%d\n", s[0]);
 }
